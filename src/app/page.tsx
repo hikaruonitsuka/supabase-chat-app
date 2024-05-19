@@ -1,30 +1,24 @@
 "use client";
 
-import LogoutButton from "@/app/components/LogoutButton";
+import Layout from "@/app/components/Layout";
+import ChatApp from "@/app/components/ChatApp";
 import useAuth from "@/hooks/useAuth";
-import SignInGithub from "./components/SignInGithub";
+import SignInGithub from "@/app/components/SignInGithub";
 
-type Props = {
-  children: React.ReactNode;
-};
-
-const Home = ({ children }: Props) => {
+const Home = () => {
   const { session: isLogin } = useAuth();
 
-  return (
-    <>
-      <header>
-        {isLogin && <LogoutButton />}
-        {!isLogin && <SignInGithub />}
-        <p>This is the header area</p>
-        <hr />
-      </header>
-      <main>{children}</main>
-      <footer>
-        <hr />
-        <p>This is the footer area</p>
-      </footer>
-    </>
+  // ログインしている場合のみチャットページを表示
+  return isLogin ? (
+    <Layout>
+      <h2>チャットアプリ</h2>
+      <ChatApp />
+    </Layout>
+  ) : (
+    <Layout>
+      <h2>Githubでサインイン</h2>
+      <SignInGithub />
+    </Layout>
   );
 };
 
